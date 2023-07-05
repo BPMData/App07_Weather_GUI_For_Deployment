@@ -24,44 +24,52 @@ forecast_type = st.selectbox(options=("Temperature", "Atmospheric Conditions"),
                              label=":green[Select type of data to view]", key="forecast_pick").casefold()
 
 if city:
-    arguments = (city, state, country)
-    fullJSON, needed = get_geo(*arguments)
-    weatherdata = get_data_properly(*needed, days)
-    country_called_upon = fullJSON[0]["country"]
-    country_called_upon = CC[country_called_upon].title()
     try:
-        state_called_upon = fullJSON[0]["state"]
-        comma = ", "
+        arguments = (city, state, country)
+        fullJSON, needed = get_geo(*arguments)
+        weatherdata = get_data_properly(*needed, days)
+        country_called_upon = fullJSON[0]["country"]
+        country_called_upon = CC[country_called_upon].title()
+        try:
+            state_called_upon = fullJSON[0]["state"]
+            comma = ", "
+        except KeyError:
+            state_called_upon = ""
+            comma = ""
+        if days == 1:
+            st.subheader(f"{forecast_type.title()} for {city.title()} in {state_called_upon}{comma}{country_called_upon} tomorrow")
+        else:
+            st.subheader(f"{forecast_type.title()} for {city.title()} in {state_called_upon}{comma}{country_called_upon} for the next {days} days")
+        stopflag = False
+    #     except IndexError:
+    #         fullJSON = ({"country": "NULL ISLAND", "state": "Down Under"}, 5)
+    #         needed = (0, 0)
+    #         weatherdata = get_data_properly(*needed, days)
+    #         country_called_upon = fullJSON[0]["country"]
+    #         country_called_upon = CC[country_called_upon].title()
+    #         errorcity = "You selected a City/Country combination which does not exist :("
+    #         try:
+    #             state_called_upon = fullJSON[0]["state"]
+    #             comma = ", "
+    #         except KeyError:
+    #             state_called_upon = ""
+    #             comma = ""
+    #         if days == 1:
+    #             st.subheader(
+    #                 f"{forecast_type.title()} for {errorcity} in {state_called_upon}{comma}{country_called_upon} tomorrow")
+    #         else:
+    #             st.subheader(
+    #                 f"{forecast_type.title()} for {errorcity} in {state_called_upon}{comma}{country_called_upon} for the next {days} days")
     except KeyError:
-        state_called_upon = ""
-        comma = ""
-    if days == 1:
-        st.subheader(f"{forecast_type.title()} for {city.title()} in {state_called_upon}{comma}{country_called_upon} tomorrow")
-    else:
-        st.subheader(f"{forecast_type.title()} for {city.title()} in {state_called_upon}{comma}{country_called_upon} for the next {days} days")
-#     except IndexError:
-#         fullJSON = ({"country": "NULL ISLAND", "state": "Down Under"}, 5)
-#         needed = (0, 0)
-#         weatherdata = get_data_properly(*needed, days)
-#         country_called_upon = fullJSON[0]["country"]
-#         country_called_upon = CC[country_called_upon].title()
-#         errorcity = "You selected a City/Country combination which does not exist :("
-#         try:
-#             state_called_upon = fullJSON[0]["state"]
-#             comma = ", "
-#         except KeyError:
-#             state_called_upon = ""
-#             comma = ""
-#         if days == 1:
-#             st.subheader(
-#                 f"{forecast_type.title()} for {errorcity} in {state_called_upon}{comma}{country_called_upon} tomorrow")
-#         else:
-#             st.subheader(
-#                 f"{forecast_type.title()} for {errorcity} in {state_called_upon}{comma}{country_called_upon} for the next {days} days")
+        st.info("Oh no! You've selected a city and/or state and/or country combination which does not exist.")
+        stopflag = True
+    except IndexError:
+        st.info("Oh no! You've selected a city and/or state and/or country combination which does not exist.")
+        stopflag = True
 else:
     st.subheader("")
 
-if city:
+if city and not stopflag:
     if forecast_type == "temperature":
         temperatures = [DAY["main"]["temp"] for DAY in weatherdata]
         dates = [DAY["dt_txt"] for DAY in weatherdata]

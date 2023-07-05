@@ -41,10 +41,16 @@ def get_geo(city=None, state=None, country=None):
         country_code = ""
     url = f"http://api.openweathermap.org/geo/1.0/direct?q={city},{state_code},{country_code}&limit=1&appid={weather_key}"
     response = requests.get(url)
-    try:
-        rawdata = response.json()
-        needed = (rawdata[0]["lat"], rawdata[0]["lon"])
-    except IndexError:
-        rawdata = ({"country": "QQ", "state": "No such city/state/country combination"}, 5)
-        needed = (0, 0)
+    # try:
+    #     rawdata = response.json()
+    #     needed = (rawdata[0]["lat"], rawdata[0]["lon"])
+    # except IndexError:
+    #     rawdata = ({"country": "QQ", "state": "No such city/state/country combination"}, 5)
+    #     needed = (0, 0)
+
+    rawdata = response.json()
+    needed = (rawdata[0]["lat"], rawdata[0]["lon"])
+    # except IndexError:
+    #     rawdata = ({"country": "QQ", "state": "No such city/state/country combination"}, 5)
+    #     needed = (0, 0)
     return rawdata, needed
