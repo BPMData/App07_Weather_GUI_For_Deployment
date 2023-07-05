@@ -13,11 +13,9 @@ if city:
     country = st.selectbox(options=capitalized_keys, label="Please select which country this city is in."
                                                            "  \n:violet[It's okay to leave this blank!]",
                            key="country_pick")
-    st.write(f"The current country is {country}")
     state = st.selectbox(options=state_converter.keys(),label="If this city is in the U.S., please select which state it is in. "
                                                               ":pink[:violet[It's okay to leave this blank!]]",
                            key="state_pick")
-    st.write(f"The current state is {state}")
 
 days = st.slider("Number of Days to Forecast", min_value=1, max_value=5,
                  help="Select the number of days you'd like to know the weather forecast for.", key="days_pick")
@@ -41,6 +39,25 @@ if city:
         st.subheader(f"{forecast_type.title()} for {city.title()} in {state_called_upon}{comma}{country_called_upon} tomorrow")
     else:
         st.subheader(f"{forecast_type.title()} for {city.title()} in {state_called_upon}{comma}{country_called_upon} for the next {days} days")
+#     except IndexError:
+#         fullJSON = ({"country": "NULL ISLAND", "state": "Down Under"}, 5)
+#         needed = (0, 0)
+#         weatherdata = get_data_properly(*needed, days)
+#         country_called_upon = fullJSON[0]["country"]
+#         country_called_upon = CC[country_called_upon].title()
+#         errorcity = "You selected a City/Country combination which does not exist :("
+#         try:
+#             state_called_upon = fullJSON[0]["state"]
+#             comma = ", "
+#         except KeyError:
+#             state_called_upon = ""
+#             comma = ""
+#         if days == 1:
+#             st.subheader(
+#                 f"{forecast_type.title()} for {errorcity} in {state_called_upon}{comma}{country_called_upon} tomorrow")
+#         else:
+#             st.subheader(
+#                 f"{forecast_type.title()} for {errorcity} in {state_called_upon}{comma}{country_called_upon} for the next {days} days")
 else:
     st.subheader("")
 

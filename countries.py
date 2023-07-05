@@ -256,6 +256,7 @@ CC = {
     "YE": "YEMEN",
     "ZM": "ZAMBIA",
     "ZW": "ZIMBABWE",
+    "QQ": "NULL ISLAND"
 }
 
 country_converter = {value: key for key, value in CC.items()}
