@@ -78,10 +78,10 @@ if city and not stopflag:
         st.plotly_chart(figure)
 
     if forecast_type == "atmospheric conditions":
-        images = {"Clear": ""https://lh3.googleusercontent.com/d/1GslstA5FMGQdj9r2iiqp4yZ9Eoaoolab",
-                  "Clouds": ""https://lh3.googleusercontent.com/d/1O5PO5jYuIKUfVhNU1Oup_8lJWFPENGPe",
-                  "Rain": ""https://lh3.googleusercontent.com/d/1LHBE5RVm47jXY_rXGjWQPLWtuXjIhlpW",
-                  "Snow": ""https://lh3.googleusercontent.com/d/1cPFMhm_m3yRTHGsNxTuajfCEPJvowbre"}
+        images = {"Clear": "https://lh3.googleusercontent.com/d/1GslstA5FMGQdj9r2iiqp4yZ9Eoaoolab",
+                  "Clouds": "https://lh3.googleusercontent.com/d/1O5PO5jYuIKUfVhNU1Oup_8lJWFPENGPe",
+                  "Rain": "https://lh3.googleusercontent.com/d/1LHBE5RVm47jXY_rXGjWQPLWtuXjIhlpW",
+                  "Snow": "https://lh3.googleusercontent.com/d/1cPFMhm_m3yRTHGsNxTuajfCEPJvowbre"}
 
         skies_description = [DAY["weather"][0]["description"].title() for DAY in weatherdata]
         skies_conditions = [DAY["weather"][0]["main"] for DAY in weatherdata]
